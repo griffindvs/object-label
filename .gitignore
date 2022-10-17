@@ -24,3 +24,6 @@ yarn-error.log*
 
 # security
 firebaseConfig.json
+
+# images
+/public/img/*

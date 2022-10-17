@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 
 import { Button, ButtonGroup, Container } from 'reactstrap';
 
@@ -20,20 +20,26 @@ class BoundingBox extends React.Component {
         this.canvasRef = React.createRef();
         this.canvas = null;
         this.ctx = null;
-        this.imageObj = new Image;
+        this.imageObj = new Image();
     }
 
     componentDidMount() {
         this.canvas = this.canvasRef.current;
         this.ctx = this.canvas.getContext('2d');
 
-        this.imageObj.onload = () => { this.ctx.drawImage(this.imageObj, 0, 0) };
-        this.imageObj.src = process.env.PUBLIC_URL + "/img/" + this.props.image;
+        // Draw empty rectangle while we wait for image
+        this.ctx.fillStyle = "#d6d6d6"
+        this.ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)
         
+        // Add listeners
         this.canvas.addEventListener('mousedown', this.mouseDown.bind(this), false);
         this.canvas.addEventListener('mouseup', this.mouseUp.bind(this), false);
+        this.canvas.addEventListener('mouseout', this.mouseUp.bind(this), false);
         this.canvas.addEventListener('mousemove', this.mouseMove.bind(this), false);
+        
+        // Setup stroke style for bounding box
         this.ctx.strokeStyle = '#03cafc';
+        this.ctx.setLineDash([10, 10]);
         this.ctx.lineWidth = 2;
     }
 
@@ -44,6 +50,7 @@ class BoundingBox extends React.Component {
     }
 
     getMousePos(evt) {
+        // Get offsets on sides and top of canvas
         var rect = this.canvas.getBoundingClientRect();
         return {
           x: evt.clientX - rect.left,
@@ -54,19 +61,29 @@ class BoundingBox extends React.Component {
     mouseDown(e) {
         e.preventDefault();
         e.stopPropagation();
+
+        // Get mouse position within canvas
         let pos = this.getMousePos(e);
+
+        // Start drawing bounding box
         this.startX = pos.x;
         this.startY = pos.y;
         this.width = 0;
         this.height = 0;
         this.drag = true;
+
+        // Erase old bounding box
         this.ctx.restore();
     }
 
     mouseUp(e) {
         e.preventDefault();
         e.stopPropagation();
+
+        // Stop dragging
         this.drag = false;
+
+        // Save new bounding box
         this.ctx.save();
     }
 
@@ -74,29 +91,35 @@ class BoundingBox extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
+        // Not currently dragging
         if (!this.drag) {
             return;
         }
 
+        // Get mouse position within canvas
         let pos = this.getMousePos(e);
         let curX = pos.x;
         let curY = pos.y;
         
+        // Clear old rectangle
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.imageObj, 0, 0);
         
+        // Draw new rectangle
         this.width = curX - this.startX;
         this.height = curY - this.startY;
         this.ctx.strokeRect(this.startX, this.startY, this.width, this.height);
     }
 
     handleReset() {
+        // Clear canvas and save state
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.imageObj, 0, 0);
         this.ctx.save();
     }
 
     handleSubmit() {
+        // Object to store results
         let box = {
             topLeftX: 0,
             topLeftY: 0,
@@ -104,6 +127,7 @@ class BoundingBox extends React.Component {
             bottomRightY: 0
         }
 
+        // Calculate needed coordinates (top left / bottom right)
         if (this.width > 0) {
             box.topLeftX = this.startX;
             box.bottomRightX = this.startX + this.width;
@@ -122,6 +146,7 @@ class BoundingBox extends React.Component {
         console.log("Box boundaries:")
         console.log(box);
 
+        // Pass up to higher level component ImageContainer
         this.props.onSubmit(box);
     }
 

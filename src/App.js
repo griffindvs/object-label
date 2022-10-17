@@ -6,10 +6,10 @@ import ImageContainer from './components/ImageContainer';
 
 import './App.css';
 
-function App(props) {
+function App() {
   const [user, setUser] = useState("");
-  const [img, setImg] = useState("");
 
+  // Receive user from lower level component InputUser and update state
   function handleUserChange(new_user) {
     setUser(new_user);
   }
@@ -18,7 +18,7 @@ function App(props) {
     <div className="App">
       <Navigation user={user} />
 
-      { user.length == 0 && <InputUser onUserChange={handleUserChange} /> }
+      { user.length === 0 && <InputUser onUserChange={handleUserChange} /> }
       { user.length > 0 && <ImageContainer user={user} /> }
     </div>
   );

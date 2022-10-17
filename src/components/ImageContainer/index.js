@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-import { Button, ButtonGroup, Container } from 'reactstrap';
+import React from 'react';
 
 import BoundingBox from '../BoundingBox';
 
@@ -8,17 +6,18 @@ import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
-import './index.css';
+const NUM_IMAGES = 840;
+const NUM_LABELS = 3;
+const classes = ['kettle', 'measuring cup', 'mug'];
 
 function pickImage() {
-    let imageNum = Math.floor(Math.random() * 840);
-    String(imageNum).padStart(3, '0');
+    let imageNum = Math.floor(Math.random() * NUM_IMAGES);
+    imageNum = String(imageNum).padStart(3, '0');
     return `color_000${imageNum}.jpg`;
 }
 
-const classes = ['kettle', 'measuring cup', 'mug']
 function pickClass() {
-    let classNum = Math.floor(Math.random() * 3);
+    let classNum = Math.floor(Math.random() * NUM_LABELS);
     return classes[classNum];
 }
 
