@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, ButtonGroup, Container } from 'reactstrap';
+import { Button, ButtonGroup, Container, Alert } from 'reactstrap';
 
 import './index.css';
 
@@ -10,6 +10,10 @@ const IMAGE_HEIGHT = 360;
 class BoundingBox extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            invalidSubmit: false
+        };
 
         this.startX = null;
         this.startY = null;
@@ -119,6 +123,12 @@ class BoundingBox extends React.Component {
     }
 
     handleSubmit() {
+        // Check that the user made a selection
+        if (this.width === 0 || this.height === 0) {
+            this.setState({invalidSubmit: true});
+            return;
+        }
+
         // Object to store results
         let box = {
             topLeftX: 0,
@@ -169,6 +179,9 @@ class BoundingBox extends React.Component {
                             Skip
                         </Button>
                     </ButtonGroup>
+                    { this.state.invalidSubmit && <Alert className="invalidSubmitAlert" color="danger">
+                        Please add a selection before pressing submit. If the requested label is not found in the image, press skip.
+                    </Alert> }
                 </Container>
             </div>
         );

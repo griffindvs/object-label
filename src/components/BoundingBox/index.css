@@ -1,3 +1,22 @@
 .canvasContainer {
     padding: 2rem;
 }
+
+.invalidSubmitAlert{
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 640px;
+}
+
+/* Fix canavs size for small screens */
+@media (max-width: 640px) {
+    canvas {
+        width: 100%;
+    }
+    .canvasContainer {
+        padding-top: 0rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        padding-bottom: 1rem;
+    }
+}
