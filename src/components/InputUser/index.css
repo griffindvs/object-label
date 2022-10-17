@@ -1,0 +1,15 @@
+.inputUser {
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 600px;
+}
+
+.inputUserCard {
+    padding: 20px;
+}
+
+.inputUserFeedback {
+    text-align: left;
+    font-size: 11pt;
+    font-style: italic;
+}

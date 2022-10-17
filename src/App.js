@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
+import Navigation from './components/Navigation';
+import InputUser from './components/InputUser';
+import ImageContainer from './components/ImageContainer';
+
 import './App.css';
 
-function App() {
+function App(props) {
+  const [user, setUser] = useState("");
+  const [img, setImg] = useState("");
+
+  function handleUserChange(new_user) {
+    setUser(new_user);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navigation user={user} />
+
+      { user.length == 0 && <InputUser onUserChange={handleUserChange} /> }
+      { user.length > 0 && <ImageContainer user={user} /> }
     </div>
   );
 }
