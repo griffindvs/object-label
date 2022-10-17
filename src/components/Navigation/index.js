@@ -10,7 +10,7 @@ function Navigation(props) {
     return (
         <div>
             <Navbar color="dark" dark expand="md">
-                <NavbarBrand href="/">
+                <NavbarBrand href={process.env.PUBLIC_URL}>
                     Object Detection Dataset Builder
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />

@@ -1,5 +1,6 @@
 {
   "name": "object-detection",
+  "homepage": "https://personal.utdallas.edu/~gcd180000/label/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

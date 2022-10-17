@@ -7,7 +7,7 @@ import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
 const NUM_IMAGES = 2243;
-const classes = ['kettle', 'measuring cup', 'mug', 'kettle lid', 'filter cone', 'paper filter'];
+const classes = ['kettle', 'measuring_cup', 'mug', 'kettle_lid', 'filter_cone', 'paper_filter'];
 const NUM_LABELS = classes.length;
 
 function pickImage() {
