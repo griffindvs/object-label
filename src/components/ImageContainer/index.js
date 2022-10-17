@@ -6,17 +6,19 @@ import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
-const NUM_IMAGES = 840;
-const NUM_LABELS = 3;
-const classes = ['kettle', 'measuring cup', 'mug'];
+const NUM_IMAGES = 2243;
+const classes = ['kettle', 'measuring cup', 'mug', 'kettle lid', 'filter cone', 'paper filter'];
+const NUM_LABELS = classes.length;
 
 function pickImage() {
-    let imageNum = Math.floor(Math.random() * NUM_IMAGES);
-    imageNum = String(imageNum).padStart(3, '0');
-    return `color_000${imageNum}.jpg`;
+    // Random integer from (1, NUM_IMAGES)
+    let imageNum = Math.floor(Math.random() * NUM_IMAGES)+1;
+    // imageNum = String(imageNum).padStart(3, '0');
+    return `${imageNum}.jpg`;
 }
 
 function pickClass() {
+    // Random integer from (0, NUM_LABELS)
     let classNum = Math.floor(Math.random() * NUM_LABELS);
     return classes[classNum];
 }
