@@ -1,13 +1,17 @@
 import React from 'react';
 
+import { Container, Row, Col, Accordion, AccordionItem, AccordionHeader, AccordionBody } from 'reactstrap'
+
 import BoundingBox from '../BoundingBox';
 
 import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
-const NUM_IMAGES = 2243;
-const classes = ['kettle', 'measuring_cup', 'mug', 'kettle_lid', 'filter_cone', 'paper_filter'];
+const NUM_IMAGES = 2819;
+const classes = ['kettle', 'measuring_cup', 'mug', 'kettle_lid', 'filter_cone', 'paper_filter_circle', 
+'paper_filter_half', 'paper_filter_quarter', 'kitchen_scale', 'coffee_beans', 'coffee_grinder', 
+'coffee_grinder_lid', 'coffee_grounds', 'thermometer'];
 const NUM_LABELS = classes.length;
 
 function pickImage() {
@@ -27,8 +31,10 @@ class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            classLabel: "",
-            image: ""
+            classLabel: pickClass(),
+            image: "",
+            accordionOpen: '',
+            nestedAccordion: ''
         };
 
         this.app = initializeApp(firebaseConfig);
@@ -36,9 +42,13 @@ class ImageContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            image: pickImage(),
-            classLabel: pickClass()
+        this.setState((state) => {
+            return {
+                image: pickImage(),
+                classLabel: pickClass(),
+                accordionOpen: state.accordionOpen,
+                nestedAccordion: state.nestedAccordion
+            }
         });
     }
 
@@ -55,25 +65,221 @@ class ImageContainer extends React.Component {
         });
         console.log("Wrote document as " + docRef.id);
 
-        this.setState({
-            image: pickImage(),
-            classLabel: pickClass()
+        this.setState((state) => {
+            return {
+                image: pickImage(),
+                classLabel: pickClass(),
+                accordionOpen: state.accordionOpen,
+                nestedAccordion: state.nestedAccordion
+            }
         });
     }
 
     handleSkip() {
-        this.setState({
-            image: pickImage(),
-            classLabel: pickClass()
+        this.setState((state) => {
+            return {
+                image: pickImage(),
+                classLabel: pickClass(),
+                accordionOpen: state.accordionOpen,
+                nestedAccordion: state.nestedAccordion
+            }
         });
+    }
+
+    toggleAccordion = (id) => {
+        if (this.state.accordionOpen === id) {
+            this.setState((state) => {
+                return {
+                    image: state.image,
+                    classLabel: state.class,
+                    accordionOpen: '',
+                    nestedAccordion: ''
+                }
+            });
+        } else {
+            this.setState((state) => {
+                return {
+                    image: state.image,
+                    classLabel: state.class,
+                    accordionOpen: id,
+                    nestedAccordion: state.nestedAccordion   
+                }
+            });
+        }
+    }
+
+    toggleNestedAccordion = (id) => {
+        if (this.state.nestedAccordion === id) {
+            this.setState((state) => {
+                return {
+                    image: state.image,
+                    classLabel: state.class,
+                    accordionOpen: state.accordionOpen,
+                    nestedAccordion: ''
+                }
+            });
+        } else {
+            this.setState((state) => {
+                return {
+                    image: state.image,
+                    classLabel: state.class,
+                    accordionOpen: state.accordionOpen,
+                    nestedAccordion: id   
+                }
+            });
+        }
     }
 
     render() {
         return (
-            <div>
-                <BoundingBox image={this.state.image} classLabel={this.state.classLabel} 
-                    onSubmit={this.handleSubmit.bind(this)} onSkip={this.handleSkip.bind(this)} />
-            </div>
+            <Container>
+                <Row>
+                    <Col>
+                        <BoundingBox image={this.state.image} classLabel={this.state.classLabel} 
+                            onSubmit={this.handleSubmit.bind(this)} onSkip={this.handleSkip.bind(this)} />
+                    </Col>
+                    <Col>
+                        <h3 className="my-4">Example Images:</h3>
+                        <Accordion open={this.state.accordionOpen} toggle={this.toggleAccordion}>
+                            <AccordionItem>
+                                <AccordionHeader targetId="1">
+                                    Measuring cup
+                                </AccordionHeader>
+                                <AccordionBody accordionId="1">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/measuring_cup.png"} 
+                                    alt="Measuring cup" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="2">
+                                    Kettle
+                                </AccordionHeader>
+                                <AccordionBody accordionId="2">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/kettle.png"} 
+                                    alt="Kettle" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="3">
+                                    Kettle lid
+                                </AccordionHeader>
+                                <AccordionBody accordionId="3">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/kettle_lid.png"} 
+                                    alt="Kettle lid" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="4">
+                                    Filter cone
+                                </AccordionHeader>
+                                <AccordionBody accordionId="4">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/filter_cone.png"} 
+                                    alt="Filter cone" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="5">
+                                    Paper filter (circle/half/quarter)
+                                </AccordionHeader>
+                                <AccordionBody accordionId="5">
+                                    <Accordion open={this.state.nestedAccordion} toggle={this.toggleNestedAccordion}>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="1">
+                                                Paper filter circle
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="1">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_circle.png"} 
+                                                alt="Paper filter circle" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="2">
+                                                Paper filter half
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="2">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_half.png"} 
+                                                alt="Paper filter half" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="3">
+                                                Paper filter quarter
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="3">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_quarter.png"} 
+                                                alt="Paper filter quarter" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                    </Accordion>
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="6">
+                                    Coffee Grinder
+                                </AccordionHeader>
+                                <AccordionBody accordionId="6">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder.png"} 
+                                    alt="Coffee grinder" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="7">
+                                    Coffee Grinder Lid
+                                </AccordionHeader>
+                                <AccordionBody accordionId="7">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_lid.png"} 
+                                    alt="Coffee grinder lid" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="8">
+                                    Coffee Beans
+                                </AccordionHeader>
+                                <AccordionBody accordionId="8">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_beans.png"} 
+                                    alt="Coffee beans" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="9">
+                                    Coffee Grounds
+                                </AccordionHeader>
+                                <AccordionBody accordionId="9">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grounds.png"} 
+                                    alt="Coffee grounds" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="10">
+                                    Thermometer
+                                </AccordionHeader>
+                                <AccordionBody accordionId="10">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/thermometer.png"} 
+                                    alt="Thermometer" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="11">
+                                    Kitchen Scale
+                                </AccordionHeader>
+                                <AccordionBody accordionId="11">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/kitchen_scale.png"} 
+                                    alt="Kitchen scale" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="12">
+                                    Mug
+                                </AccordionHeader>
+                                <AccordionBody accordionId="12">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/mug.png"} 
+                                    alt="Mug" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                        </Accordion>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
