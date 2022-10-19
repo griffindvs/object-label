@@ -66,6 +66,8 @@ class BoundingBox extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
+        this.setState({invalidSubmit: false});
+
         // Get mouse position within canvas
         let pos = this.getMousePos(e);
 

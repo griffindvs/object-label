@@ -4,6 +4,8 @@ import { Container, Row, Col, Accordion, AccordionItem, AccordionHeader, Accordi
 
 import BoundingBox from '../BoundingBox';
 
+import './index.css';
+
 import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
