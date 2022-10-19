@@ -93,7 +93,7 @@ class ImageContainer extends React.Component {
             this.setState((state) => {
                 return {
                     image: state.image,
-                    classLabel: state.class,
+                    classLabel: state.classLabel,
                     accordionOpen: '',
                     nestedAccordion: ''
                 }
@@ -102,7 +102,7 @@ class ImageContainer extends React.Component {
             this.setState((state) => {
                 return {
                     image: state.image,
-                    classLabel: state.class,
+                    classLabel: state.classLabel,
                     accordionOpen: id,
                     nestedAccordion: state.nestedAccordion   
                 }
@@ -115,7 +115,7 @@ class ImageContainer extends React.Component {
             this.setState((state) => {
                 return {
                     image: state.image,
-                    classLabel: state.class,
+                    classLabel: state.classLabel,
                     accordionOpen: state.accordionOpen,
                     nestedAccordion: ''
                 }
@@ -124,7 +124,7 @@ class ImageContainer extends React.Component {
             this.setState((state) => {
                 return {
                     image: state.image,
-                    classLabel: state.class,
+                    classLabel: state.classLabel,
                     accordionOpen: state.accordionOpen,
                     nestedAccordion: id   
                 }
