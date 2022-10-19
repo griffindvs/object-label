@@ -159,6 +159,11 @@ class BoundingBox extends React.Component {
         console.log(box);
 
         // Pass up to higher level component ImageContainer
+        this.startX = null;
+        this.startY = null;
+        this.width = 0;
+        this.height = 0;
+
         this.props.onSubmit(box);
     }
 
