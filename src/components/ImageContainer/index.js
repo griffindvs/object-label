@@ -217,20 +217,23 @@ class ImageContainer extends React.Component {
                             </AccordionItem>
                             <AccordionItem>
                                 <AccordionHeader targetId="6">
-                                    Coffee Grinder
+                                    Coffee Grinder and Lid
                                 </AccordionHeader>
                                 <AccordionBody accordionId="6">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder.png"} 
-                                    alt="Coffee grinder" width="500px" />
-                                </AccordionBody>
-                            </AccordionItem>
-                            <AccordionItem>
-                                <AccordionHeader targetId="7">
-                                    Coffee Grinder Lid
-                                </AccordionHeader>
-                                <AccordionBody accordionId="7">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_lid.png"} 
-                                    alt="Coffee grinder lid" width="500px" />
+                                    <Container>
+                                        <Row>
+                                            <Col>
+                                                Coffee grinder and lid combined:
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_combined.jpeg"} 
+                                                    alt="Coffee grinder and lid combined" width="500px" />
+                                            </Col>
+                                            <Col>
+                                                Coffee grinder and lid separate:
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_separate.jpeg"} 
+                                                    alt="Coffee grinder and lid separate" width="500px" />
+                                            </Col>
+                                        </Row> 
+                                    </Container>
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>

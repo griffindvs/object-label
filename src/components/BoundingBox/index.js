@@ -12,7 +12,8 @@ class BoundingBox extends React.Component {
         super(props);
 
         this.state = {
-            invalidSubmit: false
+            invalidSubmit: false,
+            addedBox: false
         };
 
         this.startX = null;
@@ -66,7 +67,10 @@ class BoundingBox extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
-        this.setState({invalidSubmit: false});
+        this.setState({
+            invalidSubmit: false,
+            addedBox: true
+        });
 
         // Get mouse position within canvas
         let pos = this.getMousePos(e);
@@ -122,12 +126,29 @@ class BoundingBox extends React.Component {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.imageObj, 0, 0);
         this.ctx.save();
+
+        this.setState({
+            invalidSubmit: false,
+            addedBox: false
+        });
+    }
+
+    handleSkip() {
+        this.setState({
+            invalidSubmit: false,
+            addedBox: false
+        });
+
+        this.props.onSkip();
     }
 
     handleSubmit() {
         // Check that the user made a selection
-        if (this.width === 0 || this.height === 0) {
-            this.setState({invalidSubmit: true});
+        if (this.width === 0 || this.height === 0 || !this.state.addedBox) {
+            this.setState({
+                invalidSubmit: true,
+                addedBox: false
+            });
             return;
         }
 
@@ -158,12 +179,18 @@ class BoundingBox extends React.Component {
         console.log("Box boundaries:")
         console.log(box);
 
-        // Pass up to higher level component ImageContainer
+        // Reset
         this.startX = null;
         this.startY = null;
         this.width = 0;
         this.height = 0;
 
+        this.setState({
+            invalidSubmit: false,
+            addedBox: false
+        });
+
+        // Pass up to higher level component ImageContainer
         this.props.onSubmit(box);
     }
 
@@ -182,7 +209,7 @@ class BoundingBox extends React.Component {
                         <Button color="primary" onClick={this.handleSubmit.bind(this)}>
                             Submit
                         </Button>
-                        <Button color="secondary" onClick={this.props.onSkip}>
+                        <Button color="secondary" onClick={this.handleSkip.bind(this)}>
                             Skip
                         </Button>
                     </ButtonGroup>

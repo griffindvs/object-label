@@ -50,7 +50,7 @@ function InputUser(props) {
                             />
                             { !validInput && <p className="text-danger inputUserFeedback">Please input an email address ending in @utdallas.edu</p> }
                         </FormGroup>
-                        <Button onClick={handleSubmit} className="inputUserSubmit" color="primary">Submit</Button>
+                        <Button type="submit" onClick={handleSubmit} className="inputUserSubmit" color="primary">Submit</Button>
                     </Form>
                 </Card>
             </Container>
