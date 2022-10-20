@@ -7,7 +7,7 @@ import BoundingBox from '../BoundingBox';
 import './index.css';
 
 import { initializeApp } from 'firebase/app';
-import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { collection, addDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
 const NUM_IMAGES = 2819;
@@ -64,6 +64,7 @@ class ImageContainer extends React.Component {
             top_left_y: box.topLeftY,
             bottom_right_x: box.bottomRightX,
             bottom_right_y: box.bottomRightY,
+            timestamp: serverTimestamp()
         });
         console.log("Wrote document as " + docRef.id);
 
