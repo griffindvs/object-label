@@ -49,7 +49,6 @@ class BoundingBox extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("Image: " + this.imageObj.src)
         this.imageObj.onload = () => { this.ctx.drawImage(this.imageObj, 0, 0) };
         this.imageObj.src = process.env.PUBLIC_URL + "/img/" + this.props.image;
     }

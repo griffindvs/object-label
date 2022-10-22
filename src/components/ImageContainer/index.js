@@ -5,35 +5,57 @@ import { Container, Row, Col, Accordion, AccordionItem, AccordionHeader, Accordi
 import BoundingBox from '../BoundingBox';
 
 import './index.css';
+import LABELS from './labels.json';
 
 import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
-const NUM_IMAGES = 2819;
-const classes = ['kettle', 'measuring_cup', 'mug', 'kettle_lid', 'filter_cone', 'paper_filter_circle', 
-'paper_filter_half', 'paper_filter_quarter', 'kitchen_scale', 'coffee_beans', 'coffee_grinder', 
-'coffee_grinder_lid', 'coffee_grounds', 'thermometer'];
-const NUM_LABELS = classes.length;
+const NUM_IMAGES = 2600;
 
 function pickImage() {
     // Random integer from (1, NUM_IMAGES)
     let imageNum = Math.floor(Math.random() * NUM_IMAGES)+1;
     // imageNum = String(imageNum).padStart(3, '0');
-    return `${imageNum}.jpg`;
+    return imageNum;
 }
 
 function pickClass() {
-    // Random integer from (0, NUM_LABELS)
-    let classNum = Math.floor(Math.random() * NUM_LABELS);
-    return classes[classNum];
+    // First get image
+    let imageNum = pickImage();
+    console.log("Picked image " + imageNum);
+
+    // Next get label set using imageNum
+    let curLabels = [];
+    for (let key in LABELS) {
+        if (LABELS.hasOwnProperty(key)) {
+            if (parseInt(key) >= imageNum) {
+                console.log("Found section: " + key);
+                // Found label set
+                curLabels = LABELS[key];
+                break;
+            }
+        }
+    }
+
+    // Pick label
+    let classNum = Math.floor(Math.random() * curLabels.length)+1;
+    let classLabel = curLabels[classNum];
+
+    console.log(curLabels);
+    console.log("Picked " + classLabel);
+
+    return {
+        classLabel: classLabel,
+        image: `${imageNum}.jpg`,
+    }
 }
 
 class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            classLabel: pickClass(),
+            classLabel: "",
             image: "",
             accordionOpen: '',
             nestedAccordion: ''
@@ -44,10 +66,12 @@ class ImageContainer extends React.Component {
     }
 
     componentDidMount() {
+        let newLoad = pickClass();
+
         this.setState((state) => {
             return {
-                image: pickImage(),
-                classLabel: pickClass(),
+                image: newLoad['image'],
+                classLabel: newLoad['classLabel'],
                 accordionOpen: state.accordionOpen,
                 nestedAccordion: state.nestedAccordion
             }
@@ -68,10 +92,11 @@ class ImageContainer extends React.Component {
         });
         console.log("Wrote document as " + docRef.id);
 
+        let newLoad = pickClass();
         this.setState((state) => {
             return {
-                image: pickImage(),
-                classLabel: pickClass(),
+                image: newLoad['image'],
+                classLabel: newLoad['classLabel'],
                 accordionOpen: state.accordionOpen,
                 nestedAccordion: state.nestedAccordion
             }
@@ -79,10 +104,12 @@ class ImageContainer extends React.Component {
     }
 
     handleSkip() {
+        let newLoad = pickClass();
+
         this.setState((state) => {
             return {
-                image: pickImage(),
-                classLabel: pickClass(),
+                image: newLoad['image'],
+                classLabel: newLoad['classLabel'],
                 accordionOpen: state.accordionOpen,
                 nestedAccordion: state.nestedAccordion
             }
@@ -140,6 +167,9 @@ class ImageContainer extends React.Component {
                     <Col>
                         <BoundingBox image={this.state.image} classLabel={this.state.classLabel} 
                             onSubmit={this.handleSubmit.bind(this)} onSkip={this.handleSkip.bind(this)} />
+                        <br />
+                        <p>If image or label are blank, please press Skip.</p>
+                        <p>If the label is not found in the image, please also press Skip.</p>
                     </Col>
                     <Col>
                         <h3 className="my-4">Example Images:</h3>

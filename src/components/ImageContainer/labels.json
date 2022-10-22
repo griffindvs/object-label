@@ -1,0 +1,50 @@
+{
+    "50": ["measuring_cup"],
+    "117": ["measuring_cup", "kettle", "kettle_lid"],
+    "204": ["measuring_cup", "kettle", "kettle_lid"],
+    "235": ["measuring_cup", "kettle", "kettle_lid"],
+    "324": ["measuring_cup", "kettle", "kettle_lid"],
+    "371": ["measuring_cup", "kettle", "kettle_lid"],
+
+    "423": ["filter_cone"],
+    "475": ["fitler_cone", "mug"],
+    "541": ["filter_cone", "mug"],
+
+    "592": ["paper_filter_circle"],
+    "657": ["paper_filter_circle", "paper_filter_half"],
+    "729": ["paper_filter_half", "paper_filter_quarter"],
+    "817": ["paper_filter_quarter", "filter_cone"],
+
+    "873": ["kitchen_scale"],
+    "939": ["coffee_beans", "kitchen_scale"],
+    "990": ["coffee_grinder", "coffee_grinder_lid"],
+    "1043": ["coffee_grinder", "coffee_grinder_lid"],
+    "1121": ["coffee_beans", "coffee_grinder", "coffee_grinder_lid"],
+    "1191": ["coffee_beans", "coffee_grinder", "coffee_grinder_lid"],
+    "1342": ["coffee_grinder", "coffee_grinder_lid"],
+    "1419": ["coffee_grinder", "coffee_grinder_lid", "filter_cone", "mug"],
+    "1499": ["coffee_grounds", "coffee_grinder", "coffee_grinder_lid", "filter_cone", "mug"],
+
+    "1593": ["kettle", "kettle_lid"],
+    "1688": ["kettle", "kettle_lid"],
+    "1742": ["kettle", "kettle_lid", "thermometer"],
+    "1823": ["kettle", "kettle_lid", "thermometer"],
+    "1888": ["kettle", "kettle_lid", "thermometer"],
+    "1944": ["kettle", "kettle_lid", "thermometer"],
+
+    "1997": ["filter_cone", "mug", "coffee_grounds"],
+    "2151": ["filter_cone", "mug", "coffee_grounds", "kettle", "kettle_lid"],
+
+    "2365": ["filter_cone", "mug", "coffee_grounds", "kettle", "kettle_lid"],
+
+    "2411": ["filter_cone", "mug", "coffee_grounds"],
+    "2470": ["filter_cone", "mug", "coffee_grounds", "paper_filter_quarter"],
+
+    "2535": ["mug"],
+
+    "2557": ["measuring_cup", "kettle", "kettle_lid"],
+
+    "2576": ["filter_cone", "mug"],
+
+    "2600": ["paper_filter_circle", "paper_filter_half", "paper_filter_half"]
+}
