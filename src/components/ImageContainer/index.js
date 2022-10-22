@@ -39,7 +39,7 @@ function pickClass() {
     }
 
     // Pick label
-    let classNum = Math.floor(Math.random() * curLabels.length)+1;
+    let classNum = Math.floor(Math.random() * curLabels.length-1)+1;
     let classLabel = curLabels[classNum];
 
     console.log(curLabels);
