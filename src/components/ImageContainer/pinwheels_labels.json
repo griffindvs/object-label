@@ -1,0 +1,41 @@
+{
+    "82": ["cutting_board", "peanut_butter_jar"],
+    "148": ["cutting_board", "open_tortilla", "knife"],
+
+    "209": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar"],
+    "269": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar"],
+    "393": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar"],
+    "629": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar"],
+    
+    "693": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel"],
+    "827": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel"],
+    
+    "888": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel"],
+    "962": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel", "jelly_jar"],
+    "1128": ["cutting_board", "open_tortilla", "knife", "jelly_jar"],
+    "1338": ["cutting_board", "open_tortilla", "knife", "jelly_jar"],
+    
+    "1414": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel", "jelly_jar"],
+    "1545": ["cutting_board", "open_tortilla", "knife", "peanut_butter_jar", "paper_towel", "jelly_jar"],
+    
+    "1676": ["cutting_board", "open_tortilla", "rolled_tortilla", "knife"],
+    
+    "1734": ["cutting_board", "open_tortilla", "rolled_tortilla", "knife", "toothpicks"],
+    "1941": ["cutting_board", "open_tortilla", "rolled_tortilla", "knife", "toothpicks"],
+    
+    "2148": ["cutting_board", "rolled_tortilla", "knife", "toothpicks"],
+    
+    "2221": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    "2269": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    
+    "2484": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    
+    "2733": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    
+    "2991": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    
+    "3317": ["cutting_board", "rolled_tortilla", "knife", "floss_container"],
+    
+    "3410": ["cutting_board", "sliced_tortilla", "knife", "floss_container", "plate"],
+    "3590": ["cutting_board", "sliced_tortilla", "knife", "floss_container", "plate"]
+}

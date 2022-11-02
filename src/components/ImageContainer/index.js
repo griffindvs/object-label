@@ -5,13 +5,20 @@ import { Container, Row, Col, Accordion, AccordionItem, AccordionHeader, Accordi
 import BoundingBox from '../BoundingBox';
 
 import './index.css';
-import LABELS from './labels.json';
+// import LABELS from './coffee_labels.json';
+import LABELS from './pinwheels_labels.json';
 
 import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
 const NUM_IMAGES = 2600;
+
+const COFFEE = false;
+const PINWHEELS = true;
+
+// const DB_COLLECTION = 'coffee';
+const DB_COLLECTION = 'pinwheels';
 
 function pickImage() {
     // Random integer from (1, NUM_IMAGES)
@@ -80,7 +87,7 @@ class ImageContainer extends React.Component {
 
     async handleSubmit(box) {
         // Write bounding box, label, and image to Firestore collection
-        let docRef = await addDoc(collection(this.db, "labelled"), {
+        let docRef = await addDoc(collection(this.db, DB_COLLECTION), {
             image: this.state.image,
             class: this.state.classLabel,
             user: this.props.user,
@@ -174,6 +181,8 @@ class ImageContainer extends React.Component {
                     <Col>
                         <h3 className="my-4">Example Images:</h3>
                         <Accordion open={this.state.accordionOpen} toggle={this.toggleAccordion}>
+                            { COFFEE && 
+                            <div>
                             <AccordionItem>
                                 <AccordionHeader targetId="1">
                                     Measuring cup
@@ -197,7 +206,7 @@ class ImageContainer extends React.Component {
                                     Kettle lid
                                 </AccordionHeader>
                                 <AccordionBody accordionId="3">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/kettle_lid.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/kettle_lid.png"} 
                                     alt="Kettle lid" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
@@ -206,7 +215,7 @@ class ImageContainer extends React.Component {
                                     Filter cone
                                 </AccordionHeader>
                                 <AccordionBody accordionId="4">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/filter_cone.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/filter_cone.png"} 
                                     alt="Filter cone" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
@@ -221,7 +230,7 @@ class ImageContainer extends React.Component {
                                                 Paper filter circle
                                             </AccordionHeader>
                                             <AccordionBody accordionId="1">
-                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_circle.png"} 
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/paper_filter_circle.png"} 
                                                 alt="Paper filter circle" width="300px" />
                                             </AccordionBody>
                                         </AccordionItem>
@@ -230,7 +239,7 @@ class ImageContainer extends React.Component {
                                                 Paper filter half
                                             </AccordionHeader>
                                             <AccordionBody accordionId="2">
-                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_half.png"} 
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/paper_filter_half.png"} 
                                                 alt="Paper filter half" width="300px" />
                                             </AccordionBody>
                                         </AccordionItem>
@@ -239,7 +248,7 @@ class ImageContainer extends React.Component {
                                                 Paper filter quarter
                                             </AccordionHeader>
                                             <AccordionBody accordionId="3">
-                                                <img src={process.env.PUBLIC_URL + "/assets/examples/paper_filter_quarter.png"} 
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/paper_filter_quarter.png"} 
                                                 alt="Paper filter quarter" width="300px" />
                                             </AccordionBody>
                                         </AccordionItem>
@@ -248,19 +257,19 @@ class ImageContainer extends React.Component {
                             </AccordionItem>
                             <AccordionItem>
                                 <AccordionHeader targetId="6">
-                                    Coffee Grinder and Lid
+                                    Coffee grinder and lid
                                 </AccordionHeader>
                                 <AccordionBody accordionId="6">
                                     <Container>
                                         <Row>
                                             <Col>
                                                 Coffee grinder and lid combined:
-                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_combined.jpeg"} 
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/coffee_grinder_combined.jpeg"} 
                                                     alt="Coffee grinder and lid combined" width="500px" />
                                             </Col>
                                             <Col>
                                                 Coffee grinder and lid separate:
-                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grinder_separate.jpeg"} 
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/coffee_grinder_separate.jpeg"} 
                                                     alt="Coffee grinder and lid separate" width="500px" />
                                             </Col>
                                         </Row> 
@@ -269,19 +278,19 @@ class ImageContainer extends React.Component {
                             </AccordionItem>
                             <AccordionItem>
                                 <AccordionHeader targetId="8">
-                                    Coffee Beans
+                                    Coffee beans
                                 </AccordionHeader>
                                 <AccordionBody accordionId="8">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_beans.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/coffee_beans.png"} 
                                     alt="Coffee beans" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
                                 <AccordionHeader targetId="9">
-                                    Coffee Grounds
+                                    Coffee grounds
                                 </AccordionHeader>
                                 <AccordionBody accordionId="9">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee_grounds.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/coffee_grounds.png"} 
                                     alt="Coffee grounds" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
@@ -290,16 +299,16 @@ class ImageContainer extends React.Component {
                                     Thermometer
                                 </AccordionHeader>
                                 <AccordionBody accordionId="10">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/thermometer.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/thermometer.png"} 
                                     alt="Thermometer" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
                                 <AccordionHeader targetId="11">
-                                    Kitchen Scale
+                                    Kitchen scale
                                 </AccordionHeader>
                                 <AccordionBody accordionId="11">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/kitchen_scale.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/kitchen_scale.png"} 
                                     alt="Kitchen scale" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
@@ -308,10 +317,123 @@ class ImageContainer extends React.Component {
                                     Mug
                                 </AccordionHeader>
                                 <AccordionBody accordionId="12">
-                                    <img src={process.env.PUBLIC_URL + "/assets/examples/mug.png"} 
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/mug.png"} 
                                     alt="Mug" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
+                            </div> }
+
+                            { PINWHEELS && 
+                            <div>
+                            <AccordionItem>
+                                <AccordionHeader targetId="1">
+                                    Cutting board
+                                </AccordionHeader>
+                                <AccordionBody accordionId="1">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/cutting_board.jpg"} 
+                                    alt="Cutting board" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="2">
+                                    Floss container
+                                </AccordionHeader>
+                                <AccordionBody accordionId="2">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/floss_container.jpg"} 
+                                    alt="Floss container" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="3">
+                                    Peanut butter jar
+                                </AccordionHeader>
+                                <AccordionBody accordionId="3">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/peanut_butter_jar.jpg"} 
+                                    alt="Peanut butter jar" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="4">
+                                    Jelly jar
+                                </AccordionHeader>
+                                <AccordionBody accordionId="4">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/jelly_jar.jpg"} 
+                                    alt="Jelly jar" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="5">
+                                    Tortilla (open/rolled/sliced)
+                                </AccordionHeader>
+                                <AccordionBody accordionId="5">
+                                    <Accordion open={this.state.nestedAccordion} toggle={this.toggleNestedAccordion}>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="1">
+                                                Open tortilla
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="1">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/open_tortilla.jpg"} 
+                                                alt="Open tortilla" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="2">
+                                                Rolled tortilla
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="2">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/rolled_tortilla.jpg"} 
+                                                alt="Rolled tortilla" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                        <AccordionItem>
+                                            <AccordionHeader targetId="3">
+                                                Sliced tortilla
+                                            </AccordionHeader>
+                                            <AccordionBody accordionId="3">
+                                                <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/sliced_tortilla.jpg"} 
+                                                alt="Sliced tortilla" width="300px" />
+                                            </AccordionBody>
+                                        </AccordionItem>
+                                    </Accordion>
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="8">
+                                    Knife
+                                </AccordionHeader>
+                                <AccordionBody accordionId="8">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/knife.jpg"} 
+                                    alt="Knife" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="9">
+                                    Toothpicks
+                                </AccordionHeader>
+                                <AccordionBody accordionId="9">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/toothpicks.jpg"} 
+                                    alt="Toothpicks" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="10">
+                                    Paper towel
+                                </AccordionHeader>
+                                <AccordionBody accordionId="10">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/paper_towel.jpg"} 
+                                    alt="Paper towel" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="11">
+                                    Plate
+                                </AccordionHeader>
+                                <AccordionBody accordionId="11">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/plate.jpg"} 
+                                    alt="Plate" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            </div> }
                         </Accordion>
                     </Col>
                 </Row>

@@ -10,6 +10,7 @@
 
 # production
 /build
+build.tar.gz
 
 # misc
 .DS_Store
@@ -27,3 +28,6 @@ firebaseConfig.json
 
 # images
 /public/img/*
+
+# exported data
+/exported/*
