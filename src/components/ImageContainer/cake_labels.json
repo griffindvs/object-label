@@ -1,0 +1,55 @@
+{
+    "59": ["mug"],
+    "109": ["paper_cake_liner", "mug"],
+    "157": ["paper_cake_liner", "mug"],
+    "190": ["paper_cake_liner", "mug"],
+
+    "222": ["bowl"],
+    "351": ["flour", "bowl"],
+    "479": ["sugar", "bowl"],
+    "604": ["baking_powder", "bowl"],
+    "662": ["salt", "bowl"],
+
+    "684": ["whisk"],
+    "918": ["whisk", "bowl"],
+
+    "1050": ["oil", "bowl"],
+    "1173": ["water", "bowl"],
+    "1386": ["vanilla", "bowl"],
+
+    "1408": ["whisk"],
+    "1826": ["whisk", "bowl"],
+
+    "1864": ["mug"],
+    "2297": ["batter", "mug"],
+
+    "2354": ["microwave"],
+    "2388": ["mug", "microwave"],
+    "2416": ["microwave"],
+    "3200": ["microwave"],
+
+    "3243": ["microwave", "mug"],
+    "3312": ["microwave", "mug"],
+    "3408": ["toothpicks"],
+    "3449": ["toothpicks", "cake"],
+    "3484": ["toothpicks"],
+
+    "3525": ["plate"],
+    "3642": ["mug", "cake", "plate"],
+    "3875": ["cake", "plate"],
+    "4069": ["paper_cake_liner"],
+
+    "4093": ["spoon"],
+    "4205": ["zip_top_bag"],
+    "4553": ["spoon", "chocolate_frosting", "zip_top_bag"],
+    "4634": ["zip_top_bag"],
+    "4755": ["zip_top_bag"],
+
+    "4780": ["scissors"],
+    "4820": ["scissors", "zip_top_bag"],
+
+    "5314": ["chocolate_frosting", "plate", "cake"],
+
+    "5360": ["batter", "toothpicks"]
+
+}

@@ -7,9 +7,6 @@ import './index.css';
 const IMAGE_WIDTH = 640;
 const IMAGE_HEIGHT = 360;
 
-// const IMG_DIRECTORY = '/img/coffee/';
-const IMG_DIRECTORY = '/img/pinwheels/';
-
 class BoundingBox extends React.Component {
     constructor(props) {
         super(props);
@@ -53,7 +50,7 @@ class BoundingBox extends React.Component {
 
     componentDidUpdate() {
         this.imageObj.onload = () => { this.ctx.drawImage(this.imageObj, 0, 0) };
-        this.imageObj.src = process.env.PUBLIC_URL + IMG_DIRECTORY + this.props.image;
+        this.imageObj.src = process.env.PUBLIC_URL + '/img/' + this.props.image;
     }
 
     getMousePos(evt) {

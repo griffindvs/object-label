@@ -5,34 +5,63 @@ import { Container, Row, Col, Accordion, AccordionItem, AccordionHeader, Accordi
 import BoundingBox from '../BoundingBox';
 
 import './index.css';
-// import LABELS from './coffee_labels.json';
-import LABELS from './pinwheels_labels.json';
+import COFFEE_LABELS from './coffee_labels.json';
+import PINWHEELS_LABELS from './pinwheels_labels.json';
+import CAKE_LABELS from './cake_labels.json';
 
 import { initializeApp } from 'firebase/app';
 import { collection, addDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from "../../firebaseConfig.json";
 
-const NUM_IMAGES = 2600;
+const COFFEE_NUM_IMAGES = 2600;
+const PINWHEELS_NUM_IMAGES = 3590;
+const CAKE_NUM_IMAGES = 5360;
 
 const COFFEE = false;
 const PINWHEELS = true;
+const CAKE = true;
 
-// const DB_COLLECTION = 'coffee';
-const DB_COLLECTION = 'pinwheels';
+const COFFEE_DB_COLLECTION = 'coffee';
+const PINWHEELS_DB_COLLECTION = 'pinwheels';
+const CAKE_DB_COLLECTION = 'cake';
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function pickImage() {
+    // Pick recipe
+    let recipeNum = getRandomInt(1, 2);
+
     // Random integer from (1, NUM_IMAGES)
-    let imageNum = Math.floor(Math.random() * NUM_IMAGES)+1;
-    // imageNum = String(imageNum).padStart(3, '0');
-    return imageNum;
+    let imageNum;
+    let recipe;
+    if (recipeNum === 1) {
+        recipe = 'pinwheels';
+        imageNum = getRandomInt(1, PINWHEELS_NUM_IMAGES);
+    } else if (recipeNum === 2) {
+        recipe = 'cake';
+        imageNum = getRandomInt(1, CAKE_NUM_IMAGES);
+    }
+    
+    return {
+        'r': recipe, 
+        'i': imageNum
+    };
 }
 
 function pickClass() {
     // First get image
-    let imageNum = pickImage();
-    console.log("Picked image " + imageNum);
+    let picks = pickImage();
+    let recipe = picks['r'];
+    let imageNum = picks['i'];
+    console.log("Picked image " + imageNum + " from " + recipe);
 
     // Next get label set using imageNum
+    let LABELS = recipe === 'pinwheels' ? PINWHEELS_LABELS : CAKE_LABELS;
+
     let curLabels = [];
     for (let key in LABELS) {
         if (LABELS.hasOwnProperty(key)) {
@@ -54,7 +83,7 @@ function pickClass() {
 
     return {
         classLabel: classLabel,
-        image: `${imageNum}.jpg`,
+        image: `${recipe}/${imageNum}.jpg`,
     }
 }
 
@@ -87,8 +116,12 @@ class ImageContainer extends React.Component {
 
     async handleSubmit(box) {
         // Write bounding box, label, and image to Firestore collection
+        let recipe = this.state.image.split("/")[0];
+        let imageNum = this.state.image.split("/")[1];
+        let DB_COLLECTION = recipe === "pinwheels" ? PINWHEELS_DB_COLLECTION : CAKE_DB_COLLECTION;
+
         let docRef = await addDoc(collection(this.db, DB_COLLECTION), {
-            image: this.state.image,
+            image: imageNum,
             class: this.state.classLabel,
             user: this.props.user,
             top_left_x: box.topLeftX,
@@ -398,39 +431,201 @@ class ImageContainer extends React.Component {
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
+                                <AccordionHeader targetId="6">
+                                    Baking powder
+                                </AccordionHeader>
+                                <AccordionBody accordionId="6">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/baking_powder.jpg"} 
+                                    alt="Baking powder" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="7">
+                                    Batter
+                                </AccordionHeader>
+                                <AccordionBody accordionId="7">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/batter.jpg"} 
+                                    alt="Batter" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
                                 <AccordionHeader targetId="8">
-                                    Knife
+                                    Bowl
                                 </AccordionHeader>
                                 <AccordionBody accordionId="8">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/bowl.jpg"} 
+                                    alt="Bowl" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="9">
+                                    Cake
+                                </AccordionHeader>
+                                <AccordionBody accordionId="9">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/cake.jpg"} 
+                                    alt="Cake" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="10">
+                                    Chocolate frosting
+                                </AccordionHeader>
+                                <AccordionBody accordionId="10">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/chocolate_frosting.jpg"} 
+                                    alt="Chocolate Frosting" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="11">
+                                    Flour
+                                </AccordionHeader>
+                                <AccordionBody accordionId="11">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/flour.jpg"} 
+                                    alt="Flour" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="12">
+                                    Microwave
+                                </AccordionHeader>
+                                <AccordionBody accordionId="12">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/microwave.jpg"} 
+                                    alt="Microwave" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="13">
+                                    Oil
+                                </AccordionHeader>
+                                <AccordionBody accordionId="13">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/oil.jpg"} 
+                                    alt="Oil" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="14">
+                                    Paper cake liner
+                                </AccordionHeader>
+                                <AccordionBody accordionId="14">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/paper_cake_liner.jpg"} 
+                                    alt="Paper cake liner" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="15">
+                                    Salt
+                                </AccordionHeader>
+                                <AccordionBody accordionId="15">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/salt.jpg"} 
+                                    alt="Salt" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="16">
+                                    Scissors
+                                </AccordionHeader>
+                                <AccordionBody accordionId="16">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/scissors.jpg"} 
+                                    alt="Scissors" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="17">
+                                    Spoon
+                                </AccordionHeader>
+                                <AccordionBody accordionId="17">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/spoon.jpg"} 
+                                    alt="Spoon" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="18">
+                                    Sugar
+                                </AccordionHeader>
+                                <AccordionBody accordionId="18">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/sugar.jpg"} 
+                                    alt="Sugar" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="19">
+                                    Vanilla
+                                </AccordionHeader>
+                                <AccordionBody accordionId="19">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/vanilla.jpg"} 
+                                    alt="Vanilla" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="20">
+                                    Water
+                                </AccordionHeader>
+                                <AccordionBody accordionId="20">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/water.jpg"} 
+                                    alt="Water" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="21">
+                                    Whisk
+                                </AccordionHeader>
+                                <AccordionBody accordionId="21">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/whisk.jpg"} 
+                                    alt="Whisk" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="22">
+                                    Zip top bag
+                                </AccordionHeader>
+                                <AccordionBody accordionId="22">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/cake/zip_top_bag.jpg"} 
+                                    alt="Zip top bag" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="24">
+                                    Knife
+                                </AccordionHeader>
+                                <AccordionBody accordionId="24">
                                     <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/knife.jpg"} 
                                     alt="Knife" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
-                                <AccordionHeader targetId="9">
+                                <AccordionHeader targetId="25">
                                     Toothpicks
                                 </AccordionHeader>
-                                <AccordionBody accordionId="9">
+                                <AccordionBody accordionId="25">
                                     <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/toothpicks.jpg"} 
                                     alt="Toothpicks" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
-                                <AccordionHeader targetId="10">
+                                <AccordionHeader targetId="26">
                                     Paper towel
                                 </AccordionHeader>
-                                <AccordionBody accordionId="10">
+                                <AccordionBody accordionId="26">
                                     <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/paper_towel.jpg"} 
                                     alt="Paper towel" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             <AccordionItem>
-                                <AccordionHeader targetId="11">
+                                <AccordionHeader targetId="27">
                                     Plate
                                 </AccordionHeader>
-                                <AccordionBody accordionId="11">
+                                <AccordionBody accordionId="27">
                                     <img src={process.env.PUBLIC_URL + "/assets/examples/pinwheels/plate.jpg"} 
                                     alt="Plate" width="500px" />
+                                </AccordionBody>
+                            </AccordionItem>
+                            <AccordionItem>
+                                <AccordionHeader targetId="28">
+                                    Mug
+                                </AccordionHeader>
+                                <AccordionBody accordionId="28">
+                                    <img src={process.env.PUBLIC_URL + "/assets/examples/coffee/mug.png"} 
+                                    alt="Mug" width="500px" />
                                 </AccordionBody>
                             </AccordionItem>
                             </div> }
